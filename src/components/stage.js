@@ -11,8 +11,8 @@ export default class Stage extends Component {
   };
 
   static defaultProps = {
-    width: 1024,
-    height: 576,
+    width: 360,
+    height: 696
   };
 
   static contextTypes = {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Matter from 'matter-js';
 
+
 import { AudioPlayer, Loop, Stage, KeyListener, World } from '../../src';
 
 import Character from './character';
@@ -45,7 +46,11 @@ export default class Game extends Component {
   render() {
     return (
       <Loop>
-        <Stage style={{ background: '#3a9bdc' }}>
+        <Stage style={{
+	  background: `url("../assets/bg01.png") top left`,
+	  backgroundSize : "cover"
+	
+	}}>
           <World onInit={this.physicsInit}>
             <Level store={GameStore} />
             <Character
