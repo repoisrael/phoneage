@@ -11,8 +11,9 @@ export default class Stage extends Component {
   };
 
   static defaultProps = {
-    width: 360,
-    height: 696
+	  width: 362,
+	  height: 712
+
   };
 
   static contextTypes = {
@@ -104,6 +105,7 @@ export default class Stage extends Component {
       position: 'absolute',
       overflow: 'hidden',
       transform: `translate(${xOffset}px, ${yOffset}px)`,
+
     };
   }
 
