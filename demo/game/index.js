@@ -66,21 +66,33 @@ export default class Game extends Component {
   }
 
   physicsInit(engine) {
-    const ground = Matter.Bodies.rectangle(512 * 3, 448, 1024 * 3, 64, {
+    const ground = Matter.Bodies.rectangle(0, 448, 1024 * 12, 560, {
       isStatic: true,
     });
 
-    const leftWall = Matter.Bodies.rectangle(-64, 288, 64, 576, {
+    const leftWall = Matter.Bodies.rectangle(-64, 188, 128, 576, {
       isStatic: true,
     });
 
-    const rightWall = Matter.Bodies.rectangle(3008, 288, 64, 576, {
+    const rightWall = Matter.Bodies.rectangle(284, 188, 64, 576, {
       isStatic: true,
     });
+
+
+    const topWall = Matter.Bodies.rectangle(-64, 188, 128, 576, {
+      isStatic: true,
+    });
+
+    const bottomWall = Matter.Bodies.rectangle(284, 188, 64, 576, {
+      isStatic: true,
+    });
+    
 
     Matter.World.addBody(engine.world, ground);
     Matter.World.addBody(engine.world, leftWall);
     Matter.World.addBody(engine.world, rightWall);
+    Matter.World.addBody(engine.world, topWall);
+    Matter.World.addBody(engine.world, bottomWall);
   };
 
   handleEnterBuilding(index) {

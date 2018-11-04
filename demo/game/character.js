@@ -26,6 +26,7 @@ export default class Character extends Component {
     this.isPunching = false;
     this.isLeaving = false;
     this.lastX = 0;
+    this.lastY = 0; 
 
     this.state = {
       characterState: 2,
@@ -70,7 +71,7 @@ export default class Character extends Component {
     return (
       <div style={this.getWrapperStyles()}>
         <Body
-          args={[x, 84, 64, 64]}
+          args={[x, 84,84,84]}
           inertia={0}
           ref={b => {
             this.body = b;
@@ -95,15 +96,22 @@ export default class Character extends Component {
     });
   };
 
-  move(body, x) {
-    Matter.Body.setVelocity(body, { x, y: 0 });
+  move(body, x, y) {
+    if (x) {
+    Matter.Body.setVelocity(body, { x, y:0 });
+    }
+    if (y){
+      Matter.Body.setVelocity(body, { x:0, y });
+    }
+    console.log("x:" + body.position.x);
+    console.log("y:" +body.position.y)
   };
-
+  
   jump(body) {
     this.jumpNoise.play();
     this.isJumping = true;
-    Matter.Body.applyForce(body, { x: 0, y: 0 }, { x: 0, y: -0.15 });
-    Matter.Body.set(body, 'friction', 0.0001);
+    Matter.Body.applyForce(body, { x: 0, y: 0 }, { x: 0, y: 0 });
+    Matter.Body.set(body, 'friction', 0.999);
   };
 
   punch() {
@@ -142,12 +150,45 @@ export default class Character extends Component {
     }
   };
 
-  checkKeys(shouldMoveStageLeft, shouldMoveStageRight) {
+  checkKeys(shouldMoveStageLeft, shouldMoveStageRight, shouldMoveStageUp, shouldMoveStageDown) {
     const { keys, store } = this.props;
     const { body } = this.body;
 
-
     let characterState = 2;
+
+
+    if (keys.isDown(keys.UP )) {
+      if (shouldMoveStageUp) {
+        store.setStageY(store.stageY + 1);
+        characterState = 3;
+      }
+
+      this.move(body, 0 , -1);
+      characterState = 1;
+    } else if (keys.isDown(keys.DOWN)) {
+      if (shouldMoveStageDOWN) {
+        store.setStageY(store.stageY - 1);
+      }
+
+      this.move(body, 0, 1);
+      characterState = 0;
+    }
+
+    // if (keys.isDown(keys.UP)) {
+    //       store.setStageY(store.stageY + 1);
+    //       characterState = 3;
+  
+    //     this.move(body, -1);
+    //   } else if (keys.isDown(keys.DOWN)) {
+    //       store.setStageY(store.stageY - 1);
+      
+  
+    //     this.move(body, 1);
+    //     characterState = 2;
+    //   }      
+    
+
+
 
     if (keys.isDown(65)) {
       return this.punch();
@@ -157,23 +198,21 @@ export default class Character extends Component {
       this.jump(body);
     }
 
-    if (keys.isDown(keys.UP)) {
-      return this.enterBuilding(body);
-    }
 
     if (keys.isDown(keys.LEFT)) {
       if (shouldMoveStageLeft) {
-        store.setStageX(store.stageX + 5);
+        store.setStageX(store.stageX + 1);
+        characterState = 1;
       }
 
-      this.move(body, -5);
+      this.move(body, -1);
       characterState = 1;
     } else if (keys.isDown(keys.RIGHT)) {
       if (shouldMoveStageRight) {
-        store.setStageX(store.stageX - 5);
+        store.setStageX(store.stageX - 1);
       }
 
-      this.move(body, 5);
+      this.move(body, 1);
       characterState = 0;
     }
 
@@ -187,21 +226,27 @@ export default class Character extends Component {
     const { store } = this.props;
     const { body } = this.body;
 
-    const midPoint = Math.abs(store.stageX) + 448;
+    const midPoint = Math.abs(store.stageX) + 0;
+    const midVert = Math.abs(store.stageY) + 0; 
 
-    const shouldMoveStageLeft = body.position.x < midPoint && store.stageX < 0;
+    const shouldMoveStageLeft = body.position.x < midPoint && store.stageX < 344;
     const shouldMoveStageRight =
-      body.position.x > midPoint && store.stageX > -2048;
+      body.position.x > midPoint && store.stageX > -344;
 
-    const velY = parseFloat(body.velocity.y.toFixed(10));
+      const shouldMoveStageUp = body.position.y < midVert && store.stageY < 700;
+      const shouldMoveStageDown =
+        body.position.y > midVert && store.stageY > 700;
+
+
+    const velY = parseFloat(body.velocity.y.toFixed(1));
 
     if (velY === 0) {
       this.isJumping = false;
-      Matter.Body.set(body, 'friction', 0.9999);
+      Matter.Body.set(body, 'friction', 0);
     }
 
     if (!this.isJumping && !this.isPunching && !this.isLeaving) {
-      this.checkKeys(shouldMoveStageLeft, shouldMoveStageRight);
+      this.checkKeys(shouldMoveStageRight,shouldMoveStageLeft,shouldMoveStageUp , shouldMoveStageDown );
 
       store.setCharacterPosition(body.position);
     } else {
@@ -214,9 +259,17 @@ export default class Character extends Component {
       const targetX = store.stageX + (this.lastX - body.position.x);
       if (shouldMoveStageLeft || shouldMoveStageRight) {
         store.setStageX(targetX);
-      }
+      
+      
+      const targetY = store.stageY + (this.lastY - body.position.y);
+        if (shouldMoveStageUp || shouldMoveStageDown) {
+          store.setStageY(targetY);
+        }}
+
     }
 
     this.lastX = body.position.x;
+    this.lastY  = body.position.y;
+
   };
 }
