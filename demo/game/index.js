@@ -17,7 +17,7 @@ export default class Game extends Component {
   };
 
   componentDidMount() {
-    this.player = new AudioPlayer('/assets/music.wav', () => {
+    this.player = new AudioPlayer('/assets/background.mp3', () => {
       this.stopMusic = this.player.play({
         loop: true,
         offset: 1,
