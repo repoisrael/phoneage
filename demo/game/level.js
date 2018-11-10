@@ -54,7 +54,27 @@ export default class Level extends Component {
 		};
 	}
 
+	rotate (matrix) {
+		// reverse the rows
+		 matrix = matrix.reverse();
+		 
+		 // swap the symmetric elements
+		 for (var i = 0; i < matrix.length; i++) {
+		   for (var j = 0; j < i; j++) {
+			 var temp = matrix[i][j];
+			 matrix[i][j] = matrix[j][i];
+			 matrix[j][i] = temp;
+		   }
+		 }
+	   }
+
+
 	render() {
+
+	
+		var new = this.rotate ([ a,b,c,d]);
+		console.log(new);
+
 		return (
 			<div style={this.getWrapperStyles()}>
 
@@ -65,29 +85,29 @@ export default class Level extends Component {
 					}}
 					src="assets/stone.png"
 					tileSize={32}
-					columns={11}
-					rows={22}
+					columns={22}
+					rows={11}
 					layers={[
-						[
-							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+						[	
 
+
+							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 							1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0,
 							1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
-							1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0,
 
+							1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0,
 							0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0,
 							0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0,
 							0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0,
 							0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0,
-							0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0,
 
+							0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0,
 							0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0,
 							0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0,
 							0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0,
 							0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0,
-							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 
 							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -95,6 +115,7 @@ export default class Level extends Component {
 							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 
+							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 						],
 					]}

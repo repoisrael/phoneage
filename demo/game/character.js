@@ -174,22 +174,6 @@ export default class Character extends Component {
       characterState = 0;
     }
 
-    // if (keys.isDown(keys.UP)) {
-    //       store.setStageY(store.stageY + 1);
-    //       characterState = 3;
-  
-    //     this.move(body, -1);
-    //   } else if (keys.isDown(keys.DOWN)) {
-    //       store.setStageY(store.stageY - 1);
-      
-  
-    //     this.move(body, 1);
-    //     characterState = 2;
-    //   }      
-    
-
-
-
     if (keys.isDown(65)) {
       return this.punch();
     }
@@ -273,3 +257,4 @@ export default class Character extends Component {
 
   };
 }
+  

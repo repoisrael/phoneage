@@ -47,7 +47,7 @@ export default class Game extends Component {
     return (
       <Loop>
         <Stage style={{
-	  background: `url("../assets/bg01.png") top left`,
+	  background: `url("../assets/water.png") top left`,
 	  backgroundSize : "cover"
 	
 	}}>
@@ -66,7 +66,7 @@ export default class Game extends Component {
   }
 
   physicsInit(engine) {
-    const ground = Matter.Bodies.rectangle(0, 448, 1024 * 12, 560, {
+    const ground = Matter.Bodies.rectangle(0, 448, 1024, 560, {
       isStatic: true,
     });
 
@@ -74,7 +74,7 @@ export default class Game extends Component {
       isStatic: true,
     });
 
-    const rightWall = Matter.Bodies.rectangle(284, 188, 64, 576, {
+    const rightWall = Matter.Bodies.rectangle(160, 188, 64, 576, {
       isStatic: true,
     });
 
